@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="project.css">
+        <script src="project.js"></script>
+        <title>Symulacja komety</title>
+    </head>
+    <body>
+        <input id="page_button" type="button" onclick="simulation()" value="Symulacja">
+        <div id="simulation" hidden>
+            <h1>Symulacja przelotu komety</h1>
+            <canvas id="cnv" width="1000" height="600"></canvas>
+            <form class="parameters">
+                <a id="time"></a>
+                <fieldset>
+                    <legend>Kometa: </legend>
+                    <div class="row"><label>Y: </label><input type="range" id="comet_y" min="5" max="595" value="100" oninput="cometUpdate()" onchange="cometUpdate()"></div>
+                    <div class="row"><label>Masa (kg): </label><input type="number" id="comet_mass" min=0.1 step=0.1 value=0.5>*10<sup>24</sup></div>
+                    <div class="row"><label>Kąt (°): </label><input type="number" id="comet_angle" min=-90 max=90 value=-5></div>
+                    <div class="row"><label>Prędkość: </label><input type="number" id="comet_vel" value=1 min=0.0 step=0.1>*V<sub>p_ziemi</sub></div>
+                </fieldset>
+                <fieldset>
+                    <legend>Planeta: </legend>
+                    <label id="earth_label">Masa: 1</label><input type="range" min="0.5" max="2.0" value="1.0" step="0.1" class="slider" id="earth_mass" oninput="earth_update()" onchange="earth_update()">    
+                </fieldset>
+                <fieldset>
+                    <legend>Gwiazda: </legend>
+                    <label id="sun_label">Masa: 2000</label><input type="range" min="0.5" max="2.0" value="1.0" step="0.1" class="slider" id="sun_mass" oninput="sun_update()" onchange="sun_update()">
+                </fieldset>
+            </form>
+            <form class="controls">
+                <input type="button" onclick="start()" value="Pocznij">
+                <input id="pause_button" type="button" onclick="pause()" value="Wstrzymaj">
+                <input type="button" onclick="end()" value="Zaniechaj">
+                <audio controls>
+                    <source src="Audio.mp3" type="audio/mp3">
+                Twoja przeglądarka nie obsługuje audio.
+                </audio>
+            </form>
+        </div>
+        <div id="homepage">
+            <h1>Strona główna</h1>
+            <article>
+                <h3>1. Opis symulacji</h3>
+                <p>
+                    Symulacja ma na celu pokazanie zachowania układu gwiazda-planeta w zależności od mas rozważanych obiektów oraz zaprezentowanie przelotu komety w pobliżu opisanego układu.
+
+                </p>
+                <video width=400 height=220 controls>
+                    <source src="Video.webm" type="video/webm">
+                    Twoja przeglądarka nie obsługuje video.
+                </video>
+            </article>
+            <article>
+                <h3>2. Instrukcja</h3>
+                <p>
+                    Po wystartowaniu symulacji planeta rozpoczyna ruch po orbicie. Jej prędkość wyjściowa jest obliczona dla uzyskania orbity kołowej,
+                    a zatem przez zrównanie siły grawitacji z siłą dośrodkową:
+                </p>
+                <img src="formula1.png" alt="Wzór 1" height=80>
+                <p>Otrzymując:</p>
+                <img src="formula2.png" alt="Wzór 2" height=60>
+                <p>Panel znajdujący się obok okna symulacji pozwala na regulację następujących parametrów:</p>
+                <ul>
+                    <li>masa gwiazdy</li>
+                    <li>masa planety</li>
+                    <li>wysokość "y" z jakiej startuje kometa</li>
+                    <li>masa komety</li>
+                    <li>początkowa prędkość liniowa komety jako ułamek prędkości początkowej planety</li>
+                    <li>kąt odchylenia od poziomu w stopniach [-90,90]</li>
+                </ul>
+            </article>
+            <article>
+                <h3>3. Uwagi i założenia</h3>
+                                <ul>
+                    <li>Przedstawione ciała nie reprezentują układu Słońce-Ziemia, a jedynie teoretyczny układ, w którym masa gwiazdy jest 3 rzędy wielkości
+                        większa od masy planety</li>
+                    <li>W układzie nie są przewidziane zderzenia, w obliczeniach wszystkie ciała traktowane są jako punkty materialne
+                        o opisanej masie</li>
+                    <li>Gwiazda nie podlega wpływowi grawitacji pozostałych ciał, który przy kilku rzędach wielkości różnicy w masie jest pomijalny</li>
+                </ul>
+            </article>
+            <article>
+                <h3>4. Krótki opis projektu</h3>
+                W projekcie wykorzystano technologie:
+                <ul>
+                    <li>HTML5: elementy semantyczne m.in. "footer", "article", "audio", "video"</li>
+                    <li>Grafika: element "canvas"</li>
+                    <li>JavaScript: animacje, modyfikacja strony przy użyciu m.in "getElementById", "innerHTML", "onClick()" oraz modyfikacja stylu m.in. atrybutu "hidden"</li>
+                    <li>Dodatkowe funkcjonalności: WebWorker - technologia pracy w tle pokazana na prostym przykładzie zegara niezależnego od animacji</li>
+                </ul>
+            </article>
+        </div>
+        <footer id="footer">
+            Muzyka: "Walkampfchampagne" autorstwa <a href="https://freemusicarchive.org/music/Erdbeerschnitzel#contact-artist">Erdbeerschnitzel</a><br>
+            Tło: zdjęcie autorstwa <a href="https://pixabay.com/photos/stars-sky-night-starry-night-sky-1654074/">Hans</a> na podstawie licencji otwartej
+        </footer>
+    </body>
+</html>
